@@ -1,0 +1,15 @@
+<div class="city view">
+    <div class="container">
+        <h2>
+            City search
+        </h2>
+        <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+        City:
+        <br/>
+        <input type="text" ng-model="city"/>
+        <br/>
+        <ul>
+            <li ng-repeat="cust in customers|filter:city|orderBy:city">{{ cust.name }} - {{ cust.address }}-{{ cust.city }}</li>
+        </ul>
+    </div>
+</div>
