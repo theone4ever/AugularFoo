@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html data-ng-app="demoApp" class="ng-scope">
+<html ng-app="demoApp" class="ng-scope">
 
 <head>
     <title>This is a demo for angular js</title>
     <link href="content/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="content/css/bootstrap-responsive.css" rel="stylesheet"/>
     <link href="content/css/main.css" rel="stylesheet"/>
+    <link href="content/css/directgraph.css" rel="stylesheet" >
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand " href="#/">
-                <img src="content/img/people.png" alt="logo"> Customer Management
+                <img src="content/img/people.png" alt="logo"> AngularJS Demo
             </a>
-            <ul class="nav nav-pills" data-ng-controller="NavbarController">
-                <li data-ng-class="{'active':getClass('/customers')}"><a href="#/customers">Customers</a></li>
-                <li data-ng-class="{'active':getClass('/city')}"><a href="#/city">City</a></li>
+            <ul class="nav nav-pills" ng-controller="NavbarController">
+                <li ng-class="{'active':getClass('/customers')}"><a href="#/customers">Customers</a></li>
+                <li ng-class="{'active':getClass('/city')}"><a href="#/city">City</a></li>
+                <li ng-class="{'active':getClass('/chart')}"><a href="#/chart">Chart Demo</a></li>
+                <li ng-class="{'active':getClass('/d3demo')}"><a href="#/d3demo">D3 Demo</a></li>
+                <li ng-class="{'active':getClass('/directgraph')}"><a href="#/directgraph">D3 Direct graph editor</a></li>
             </ul>
         </div>
     </div>
@@ -50,13 +54,18 @@
 <script src="js/angular-route.js"></script>
 <script src="js/ui-bootstrap-tpls-0.10.0.js"></script>
 <script src="app/app.js"></script>
+<script src="app/service/d3.js"></script>
+
 <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
 <script src="js/angles.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="app/directives/animatedView.js"></script>
+<script src="app/directives/d3Bars.js"></script>
+<script src="app/directives/directgraph.js"></script>
 <script src="app/controllers/controllers.js"></script>
-<script src="app/factory/factory.js"></script>
+<script src="app/factory/SimpleFactory.js"></script>
+<script src="app/factory/AjaxFactory.js"></script>
 
 </body>
 </html>

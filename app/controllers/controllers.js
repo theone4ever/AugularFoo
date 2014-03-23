@@ -1,15 +1,33 @@
-demoApp.controller("SimplerController", function ($scope, SimpleFactory) {
-    $scope.customers = {};
-    init();
-    function init() {
-        $scope.customers = SimpleFactory.getCustomers();
-    }
-
+demoApp.controller("SimplerController", function ($scope, AjaxFactory) {
+    $scope.customers = AjaxFactory.getCustomers(
+        function (result) {
+            $scope.customers = result;
+        }
+    );
 
     $scope.addCustomer = function () {
-        SimpleFactory.putCustomer({name: $scope.newCustomer.name, city: $scope.newCustomer.city, address:$scope.newCustomer.address});
+        $scope.customers = AjaxFactory.putCustomer(
+            {
+                name: $scope.newCustomer.name,
+                city: $scope.newCustomer.city,
+                address: $scope.newCustomer.address
+            }, function (result) {
+                $scope.customers = result;
+            }
+        );
     };
 
+    $scope.alerts = [
+        { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+        { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+    ];
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
+
+});
+
+demoApp.controller("ChartController", function ($scope) {
     $scope.chart = {
         labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         datasets: [
@@ -84,16 +102,32 @@ demoApp.controller("SimplerController", function ($scope, SimpleFactory) {
         //Function - Will fire on animation completion.
         onAnimationComplete: null
     };
-
-    $scope.alerts = [
-        { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-        { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-    ];
-    $scope.closeAlert = function (index) {
-        $scope.alerts.splice(index, 1);
-    };
-
 });
+
+
+demoApp.controller('MainCtrl', ['$scope',
+    function ($scope) {
+        $scope.greeting = "Try to render with data:";
+        $scope.data = [
+            {
+                name: "Greg",
+                score: 98
+            },
+            {
+                name: "Ari",
+                score: 96
+            },
+            {
+                name: 'Q',
+                score: 75
+            },
+            {
+                name: "Loser",
+                score: 48
+            }
+        ];
+    }
+]);
 
 demoApp.controller('NavbarController', function ($scope, $location) {
     $scope.getClass = function (path) {
@@ -103,10 +137,4 @@ demoApp.controller('NavbarController', function ($scope, $location) {
             return false;
         }
     }
-});/**
- * Created with IntelliJ IDEA.
- * User: eqqiwng
- * Date: 3/17/14
- * Time: 23:16
- * To change this template use File | Settings | File Templates.
- */
+});

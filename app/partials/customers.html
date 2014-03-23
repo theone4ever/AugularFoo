@@ -1,14 +1,9 @@
 <div class="customers view">
     <div class="container">
+        <h2>Searh customer</h2>
         <div>
+            <input id="searchName" type="text" ng-model="name" placeholder="Type in Name"/>
             <br/>
-            <br/>
-
-            <label for="searchName">Type in name:</label>
-            <input id="searchName" type="text" ng-model="name" placeholder="Name"/>
-            <br/>
-            <br/>
-
             <div>
                 <div class="row cardContainer">
                     <div class="span3 card" data-ng-repeat="customer in customers | filter:name|orderBy:'city'">
@@ -18,35 +13,29 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <h2>Create new Customers</h2>
         <div>
             <p>
-                <label for="input_name"> Customer Name:</label>
+                <label for="input_name"> Name:</label>
                 <input type="text" id="input_name" placeholder="Name" ng-model="newCustomer.name"/>
             </p>
             <p>
-                <label for="input_city"> Customer City:</label>
+                <label for="input_city"> City:</label>
                 <input type="text" id="input_city" placeholder="City" ng-model="newCustomer.city"/>
             </p>
             <p>
-                <label for="input_address"> Customer Address:</label>
+                <label for="input_address"> Address:</label>
                 <input type="text" id="input_address" placeholder="Address" ng-model="newCustomer.address"/>
             </p>
             <button type="submit" class="btn btn-primary" ng-click="addCustomer()"
                     data-ng-disabled="!newCustomer.name || !newCustomer.city">
-                Submit
+                Add Customer
             </button>
             <br/>
             <br/>
             <br/>
         </div>
     </div>
-    <div>
-        <header>Play with Chart</header>
-        <div class="span6">
-            <canvas chart type="Line" options="options" data="chart" width="500" height="300"></canvas>
-        </div>
-        <div class="span6">
-            <canvas donutchart options="myChartOptions" data="myChartData" width="300" height="300"></canvas>
-        </div>
-    </div>
+
 </div>
