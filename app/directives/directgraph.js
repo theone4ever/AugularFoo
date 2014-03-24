@@ -2,11 +2,6 @@ demoApp.directive('directGraph', ['$window', '$timeout', 'd3',
     function ($window, $timeout, d3) {
         return {
             restrict: 'EA',
-//            scope: {
-//                //data: '=',
-//                label: '@',
-//                onClick: '&'
-//            },
             link: function (scope, ele, attrs) {
                 var renderTimeout;
 
@@ -291,6 +286,7 @@ demoApp.directive('directGraph', ['$window', '$timeout', 'd3',
                                 .text(function (d) {
                                     return d.id;
                                 });
+                                $(".node").tipsy({gravity:'w'});
 
                             // remove old nodes
                             circle.exit().remove();
