@@ -57,7 +57,7 @@ demoApp.directive('directGraph', ['$window', '$timeout', 'd3',
                             .size([width, height])
                             .linkDistance(150)
                             .charge(-500)
-                            .on('tick', tick)
+                            .on('tick', tick);
 
 // define arrow markers for graph links
                         svg.append('svg:defs').append('svg:marker')
@@ -286,7 +286,6 @@ demoApp.directive('directGraph', ['$window', '$timeout', 'd3',
                                 .text(function (d) {
                                     return d.id;
                                 });
-                                $(".node").tipsy({gravity:'w'});
 
                             // remove old nodes
                             circle.exit().remove();

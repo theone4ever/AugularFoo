@@ -2,11 +2,11 @@ demoApp.directive('d3Bars', ['$window', '$timeout', 'd3',
     function ($window, $timeout, d3) {
         return {
             restrict: 'EA',
-//            scope: {
-//                //data: '=',
+            scope: {
+                data: '='
 //                label: '@',
 //                onClick: '&'
-//            },
+            },
             link: function (scope, ele, attrs) {
                 var renderTimeout;
                 var margin = parseInt(attrs.margin) || 20,

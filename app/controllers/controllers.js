@@ -105,27 +105,14 @@ demoApp.controller("ChartController", function ($scope) {
 });
 
 
-demoApp.controller('MainCtrl', ['$scope',
-    function ($scope) {
-        $scope.greeting = "Try to render with data:";
-        $scope.d3data = [
-            {
-                name: "Greg",
-                score: 98
-            },
-            {
-                name: "Ari",
-                score: 96
-            },
-            {
-                name: 'Q',
-                score: 75
-            },
-            {
-                name: "Loser",
-                score: 48
-            }
-        ];
+demoApp.controller('MainCtrl', ['$scope', '$http',
+    function ($scope, $http) {
+        $http({
+            method: 'GET',
+            url: 'app/data/data.json'
+        }).then(function (data, status) {
+                $scope.d3data = data.data.result;
+            });
     }
 ]);
 
@@ -141,51 +128,79 @@ demoApp.controller('NavbarController', function ($scope, $location) {
 
 
 demoApp.controller('DependencyGraphController', function ($scope, $http) {
-    $scope.dataset = null;
-    $scope.config = null;
+    $scope.d3dataset = {};
 
     $http({method: 'GET', url: 'app/data/default/objects.json'})
-        .success(function (result) {
+        .success(function (totalresult) {
             //data is a map instead of list with object name as key and object itself as value.
-            var data   = {};
+            var result = totalresult.objects;
+            $scope.d3dataset.config = totalresult.config;
             var error = {};
+            $scope.d3dataset.dataset = {},
+                $scope.d3dataset.doc = {};
 
             //result is an array.
-            for(var i in result){
-                data[result[i].name] = result[i];
+            for (var i in result) {
+                $scope.d3dataset.dataset[result[i].name] = result[i];
             }
 
-            for(var i in data){
-                data[i].dependedOnBy = new Array();
+            for (var i in $scope.d3dataset.dataset) {
+                $scope.d3dataset.dataset[i].dependedOnBy = new Array();
             }
 
 
-            for(var i in data){
-                for(var j in data[i].depends){
-                    var name = data[i].depends[j];
-                    if(data[name]){
-                        data[name].dependedOnBy.push(data[i].name);
+            for (var i in $scope.d3dataset.dataset) {
+                for (var j in $scope.d3dataset.dataset[i].depends) {
+                    var name = $scope.d3dataset.dataset[i].depends[j];
+                    if ($scope.d3dataset.dataset[name]) {
+                        $scope.d3dataset.dataset[name].dependedOnBy.push($scope.d3dataset.dataset[i].name);
                     }
                 }
             }
 
-            for(var i in data){
-                data[i].docs = "";
+
+            for (var i in totalresult.doc) {
+                $scope.d3dataset.dataset[totalresult.doc[i].name].docs = totalresult.doc[i].doc;
             }
 
-            $scope.dataset = data;
-            $scope.render();
-        })
-        .error(function (data, status, headers, config) {
-            //  Do some error handling here
-        });
+            for(var i in $scope.d3dataset.dataset){
+                $scope.d3dataset.dataset[i].docshtml = printdocs($scope.d3dataset.dataset[i]);
+            }
 
+            function printdocs(obj){
+                var docshtml = "<h2>"+obj.name+"<em>"+obj.type+"</em></h2>";
+                if(!obj.docs){
+                    docshtml+="<div class=\"alert alert-warning\">No documentation for this object</div>";
+                }else{
+                    docshtml+="<div >"+obj.docs+"</div>";
+                }
+                docshtml+="<h3>Depends on</h3><ul>";
+                for(var i in obj.depends){
+                    docshtml+="<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name="+obj.depends[i]+">"+obj.depends[i]+"</a></li>";
+                }
+                docshtml+="</ul><h3>Depends on by</h3><ul>";
+                for(var i in obj.dependedOnBy){
+                    docshtml+="<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name="+obj.dependedOnBy[i]+">"+obj.dependedOnBy[i]+"</a></li>";
+                }
 
-    $http({method: 'GET', url: 'app/data/default/config.json'})
-        .success(function (result) {
-            $scope.config = result;
+                docshtml+="</ul>";
+                return docshtml;
+
+            }
+
         })
         .error(function (data, status, headers, config) {
             //  Do some error handling here
         });
 });
+
+demoApp.controller('FlareCtrl', ['$scope', '$http',
+    function ($scope, $http) {
+        $http({
+            method: 'GET',
+            url: 'app/data/flare.json'
+        }).then(function (data, status) {
+                $scope.flare = data;
+            });
+    }
+]);
