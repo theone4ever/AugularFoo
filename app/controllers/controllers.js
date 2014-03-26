@@ -108,7 +108,7 @@ demoApp.controller("ChartController", function ($scope) {
 demoApp.controller('MainCtrl', ['$scope',
     function ($scope) {
         $scope.greeting = "Try to render with data:";
-        $scope.data = [
+        $scope.d3data = [
             {
                 name: "Greg",
                 score: 98
@@ -137,4 +137,55 @@ demoApp.controller('NavbarController', function ($scope, $location) {
             return false;
         }
     }
+});
+
+
+demoApp.controller('DependencyGraphController', function ($scope, $http) {
+    $scope.dataset = null;
+    $scope.config = null;
+
+    $http({method: 'GET', url: 'app/data/default/objects.json'})
+        .success(function (result) {
+            //data is a map instead of list with object name as key and object itself as value.
+            var data   = {};
+            var error = {};
+
+            //result is an array.
+            for(var i in result){
+                data[result[i].name] = result[i];
+            }
+
+            for(var i in data){
+                data[i].dependedOnBy = new Array();
+            }
+
+
+            for(var i in data){
+                for(var j in data[i].depends){
+                    var name = data[i].depends[j];
+                    if(data[name]){
+                        data[name].dependedOnBy.push(data[i].name);
+                    }
+                }
+            }
+
+            for(var i in data){
+                data[i].docs = "";
+            }
+
+            $scope.dataset = data;
+            $scope.render();
+        })
+        .error(function (data, status, headers, config) {
+            //  Do some error handling here
+        });
+
+
+    $http({method: 'GET', url: 'app/data/default/config.json'})
+        .success(function (result) {
+            $scope.config = result;
+        })
+        .error(function (data, status, headers, config) {
+            //  Do some error handling here
+        });
 });

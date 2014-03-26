@@ -7,6 +7,9 @@
     <link href="content/css/bootstrap-responsive.css" rel="stylesheet"/>
     <link href="content/css/main.css" rel="stylesheet"/>
     <link href="content/css/directgraph.css" rel="stylesheet" >
+
+    <link href="content/css/d-style.css" rel="stylesheet" >
+    <link href="content/css/d-svg.css" rel="stylesheet" >
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -21,11 +24,16 @@
                 <li ng-class="{'active':getClass('/chart')}"><a href="#/chart">Chart Demo</a></li>
                 <li ng-class="{'active':getClass('/d3demo')}"><a href="#/d3demo">D3 Demo</a></li>
                 <li ng-class="{'active':getClass('/directgraph')}"><a href="#/directgraph">D3 Direct graph editor</a></li>
+                <li ng-class="{'active':getClass('/dependencygraph')}"><a href="#/dependencygraph">D3 Dependency Graph</a></li>
             </ul>
         </div>
     </div>
 </div>
 
+<br/>
+<br/>
+<br/>
+<br/>
 <div animated-view></div>
 
 <div id="footer">
@@ -63,21 +71,16 @@
 <script src="app/directives/animatedView.js"></script>
 <script src="app/directives/d3Bars.js"></script>
 <script src="app/directives/directgraph.js"></script>
+<script src="app/directives/dgraph.js"></script>
 <script src="app/controllers/controllers.js"></script>
 <script src="app/factory/SimpleFactory.js"></script>
 <script src="app/factory/AjaxFactory.js"></script>
 
-<!--add for tool tip support: http://bl.ocks.org/jdonaldson/1211706-->
-<!--script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js"></script>
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js"></script-->
-<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://raw.github.com/bigmlcom/tipsy/master/src/javascripts/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="http://onehackoranother.com/projects/jquery/tipsy/stylesheets/tipsy.css" type="text/css" title="no title" charset="utf-8">
-<style type="text/css">
-.link { stroke: #ccc; }
-.nodetext { pointer-events: none; font: 10px sans-serif; }
-</style>
-<!--end: add for tool tip support: http://bl.ocks.org/jdonaldson/1211706-->
+
+<!--depdendency graph required-->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/colorbrewer.js"></script>
+<script src="js/geometry.js"></script>
 
 
 </body>
