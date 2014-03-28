@@ -163,27 +163,27 @@ demoApp.controller('DependencyGraphController', function ($scope, $http) {
                 $scope.d3dataset.dataset[totalresult.doc[i].name].docs = totalresult.doc[i].doc;
             }
 
-            for(var i in $scope.d3dataset.dataset){
+            for (var i in $scope.d3dataset.dataset) {
                 $scope.d3dataset.dataset[i].docshtml = printdocs($scope.d3dataset.dataset[i]);
             }
 
-            function printdocs(obj){
-                var docshtml = "<h2>"+obj.name+"<em>"+obj.type+"</em></h2>";
-                if(!obj.docs){
-                    docshtml+="<div class=\"alert alert-warning\">No documentation for this object</div>";
-                }else{
-                    docshtml+="<div >"+obj.docs+"</div>";
+            function printdocs(obj) {
+                var docshtml = "<h2>" + obj.name + "<em>" + obj.type + "</em></h2>";
+                if (!obj.docs) {
+                    docshtml += "<div class=\"alert alert-warning\">No documentation for this object</div>";
+                } else {
+                    docshtml += "<div >" + obj.docs + "</div>";
                 }
-                docshtml+="<h3>Depends on</h3><ul>";
-                for(var i in obj.depends){
-                    docshtml+="<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name="+obj.depends[i]+">"+obj.depends[i]+"</a></li>";
+                docshtml += "<h3>Depends on</h3><ul>";
+                for (var i in obj.depends) {
+                    docshtml += "<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name=" + obj.depends[i] + ">" + obj.depends[i] + "</a></li>";
                 }
-                docshtml+="</ul><h3>Depends on by</h3><ul>";
-                for(var i in obj.dependedOnBy){
-                    docshtml+="<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name="+obj.dependedOnBy[i]+">"+obj.dependedOnBy[i]+"</a></li>";
+                docshtml += "</ul><h3>Depends on by</h3><ul>";
+                for (var i in obj.dependedOnBy) {
+                    docshtml += "<li><a href=\"#obj-db-view-9\" class=\" select-object\" data-name=" + obj.dependedOnBy[i] + ">" + obj.dependedOnBy[i] + "</a></li>";
                 }
 
-                docshtml+="</ul>";
+                docshtml += "</ul>";
                 return docshtml;
 
             }
@@ -194,13 +194,12 @@ demoApp.controller('DependencyGraphController', function ($scope, $http) {
         });
 });
 
-demoApp.controller('FlareCtrl', ['$scope', '$http',
-    function ($scope, $http) {
-        $http({
-            method: 'GET',
-            url: 'app/data/flare.json'
-        }).then(function (data, status) {
-                $scope.flare = data;
-            });
-    }
-]);
+demoApp.controller('FlareCtrl', function ($scope, $http) {
+    $http({method: 'GET', url: 'app/data/flare.json'})
+        .success(function (data) {
+            $scope.flare = data.data;
+        })
+        .error(function (data, status, headers, config) {
+            //  Do some error handling here
+        });
+});

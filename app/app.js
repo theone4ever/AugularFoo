@@ -38,10 +38,10 @@ demoApp.config(function($routeProvider) {
             controller: 'DependencyGraphController',
             templateUrl: 'app/partials/dependencygraph.html'
         })
-//        .when('/treegraph', {
-//            controller: 'FlareCtrl',
-//            templateUrl: 'app/partials/treejson.html'
-//        })
+        .when('/treegraph', {
+            controller: 'FlareCtrl',
+            templateUrl: 'app/partials/treeJson.html'
+        })
         .otherwise({
             redirecTo: '/customers'
         });

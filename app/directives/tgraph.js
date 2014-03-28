@@ -9,13 +9,13 @@ demoApp.directive('treeGraph', ['$window', '$timeout', 'd3',
             },
             link: function (scope, ele, attrs) {
                 var renderTimeout;
-                var margin = parseInt(attrs.margin) || 20,
-                    barHeight = parseInt(attrs.barHeight) || 20,
-                    barPadding = parseInt(attrs.barPadding) || 5;
+//                var margin = parseInt(attrs.margin) || 20,
+//                    barHeight = parseInt(attrs.barHeight) || 20,
+//                    barPadding = parseInt(attrs.barPadding) || 5;
 
-                var svg = d3.select(ele[0])
-                    .append('svg')
-                    .style('width', '100%');
+//                var svg = d3.select(ele[0])
+//                    .append('svg')
+//                    .style('width', '100%');
 
                 $window.onresize = function () {
                     scope.$apply();
@@ -24,15 +24,15 @@ demoApp.directive('treeGraph', ['$window', '$timeout', 'd3',
                 scope.$watch(function () {
                     return angular.element($window)[0].innerWidth;
                 }, function () {
-                    scope.render(scope.data);
+                    scope.render(scope.treedata);
                 });
 
-                scope.$watch('treedata', function (newData) {
-                    scope.render(newData);
+                scope.$watch('treedata', function (treeData) {
+                    scope.render(treeData);
                 }, true);
 
                 scope.render = function (treeData) {
-                    svg.selectAll('*').remove();
+//                    svg.selectAll('*').remove();
 
                     if (!treeData) return;
                     if (renderTimeout) clearTimeout(renderTimeout);
